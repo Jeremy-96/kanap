@@ -25,12 +25,15 @@ function displayProducts(product) { // Ajout des éléments constructeurs via le
     const items = document.getElementById('items');
     const aElt = document.createElement('a');
     const articleElt = document.createElement('article');
-    items.appendChild(aElt) + aElt.appendChild(articleElt);
     const imgElt = document.createElement('img');
     const hElt = document.createElement('h3');
     const pElt = document.createElement('p');
+
+    items.appendChild(aElt) + aElt.appendChild(articleElt);
+
     hElt.classList.add('productName');
     pElt.classList.add('productDescription');
+    
     articleElt.appendChild(imgElt) + articleElt.appendChild(hElt) + articleElt.appendChild(pElt);
     articleElt.querySelector('h3').textContent = product.name
     articleElt.querySelector('p').textContent = product.description
