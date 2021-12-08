@@ -140,6 +140,107 @@ if(localItems === null) {
         }
     }
     modifyItems();
+
+    /**
+     * On valide le formulaire de commande de la page panier
+     * Grace à l'utilisation des RegEx, on va va vérifié les champs du formulaires
+     */
+    function checkForm() {
+        // On récupère le formulaire
+        let form = document.querySelector('.cart__order__form');
+
+        // On vérifie le prénom 
+        form.firstName.addEventListener('change', function() {
+            validFirstName(this);
+        });
+        // On vérifie le nom
+        form.lastName.addEventListener('change', function() {
+            validLastName(this);
+        });
+        // On vérifie l'adresse
+        form.address.addEventListener('change', function() {
+            validAddress(this);
+        });
+        // On vérifie la ville
+        form.city.addEventListener('change', function() {
+            validCity(this);
+        });
+        // On vérifie l'email
+        form.email.addEventListener('change', function() {
+            validEmail(this);
+        });
+
+        // Prénom
+        const validFirstName = function(inputFirstName) {
+            // Création du regex adapté
+            let firstNameRegExp = new RegExp('^[A-Z][A-Za-z\é\è\ê\ç\-]+$', 'g');
+            // On teste la valeur de l'input
+            let testFirstName = firstNameRegExp.test(inputFirstName.value);
+            const errorFirstName = inputFirstName.nextElementSibling;
+            if(testFirstName) {
+                errorFirstName.innerHTML = '';
+            }else {
+                errorFirstName.innerHTML = 'Prénom invalide, complétez le champ. Exemple : Bruce, Léonardo, Hugue, ...';
+            }
+        }
+
+        // Nom
+        const validLastName = function(inputLastName) {
+            // Création du regex adapté
+            let lastNameRegExp = new RegExp('^[A-Z][A-Za-z\é\è\ê\ç\-]+$', 'g');
+            // On teste la valeur de l'input
+            let testLastName = lastNameRegExp.test(inputLastName.value);
+            const errorLastName = inputLastName.nextElementSibling;
+            if(testLastName) {
+                errorLastName.innerHTML = '';
+            }else {
+                errorLastName.innerHTML = 'Nom invalide, complétez le champ. Exemple : Willis, Dicaprio, Jackman, ...';
+            }
+        }
+
+        // Adresse
+        const validAddress = function(inputAddress) {
+            // Création du regex adapté
+            let addressRegExp = new RegExp('^[0-9]{1,3}(?:(?:[,. ]){1}[-a-zA-Zàâäéèêëïîôöùûüç]+)+', 'g');
+            // On teste la valeur de l'input
+            let testAddress = addressRegExp.test(inputAddress.value);
+            const errorAddress = inputAddress.nextElementSibling;
+            if(testAddress) {
+                errorAddress.innerHTML = '';
+            }else {
+                errorAddress.innerHTML = 'Adresse invalide, complétez le champ. Exemple : 53,Rue des aubépinnes';
+            }
+        }
+
+        // Ville
+        const validCity = function(inputCity) {
+            // Création du regex adapté
+            let cityRegExp = new RegExp('^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$', 'g');
+            // On teste la valeur de l'input
+            let testCity = cityRegExp.test(inputCity.value);
+            const errorCity = inputCity.nextElementSibling;
+            if(testCity) {
+                errorCity.innerHTML = ' ';
+            }else {
+                errorCity.innerHTML = 'Ville invalide, complétez le champ. Exemple : Paris,Bruxelles,Los-Angeles, ...';
+            }
+        }
+
+        // Email
+        const validEmail = function(inputEmail) {
+            // Création du regex adapté
+            let emailRegExp = new RegExp('^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$', 'g');
+            // On teste la valeur de l'input
+            let testEmail = emailRegExp.test(inputEmail.value);
+            const errorEmail = inputEmail.nextElementSibling;
+            if(testEmail) {
+                errorEmail.innerHTML = ' ';
+            }else {
+                errorEmail.innerHTML = 'Email invalide, complétez le champ. Exemple : exemple123@test.com';
+            }
+        }
+    }
+    checkForm();
 }
 
 
