@@ -8,7 +8,7 @@ let localItems = JSON.parse(localStorage.getItem('itemToCart'));
  * Ensuite on affichera les produits contenus dans le tableau de manière dynamique avec le DOM
  */
 if(localItems === null) {
-    console.log('Le panier est vide');
+    // Rien de s'affiche
 }else {
     for(j = 0; j < localItems.length; j++) {
         // On récupère la balise <section> qui contient les produits du panier
@@ -241,7 +241,78 @@ if(localItems === null) {
         }
     }
     checkForm();
+
+    /** 
+     * On soumet le formulaire du panier ainsi que les produits séléctionnés
+     * On récupère le bouton de commande 'order'
+     * On écoute l'évenement 'click' du bouton 'order'
+     * Ensuite on récupère les données des différents champs du formulaire
+     * On stock l'id des produits du panier dans un tableau
+     * On prépare les données du formulaires ainsi que l'id des produits pour les envoyer au format  JSON
+     * On requète l'API en lui envoyant les données de la commande
+     */
+    function sendData() {
+        // On récupère le bouton de commande 'order'
+        const orderElt = document.getElementById('order');
+
+        // On écoute l'évenement 'click' du bouton 'order'
+        orderElt.addEventListener('click', (event) => {
+            event.preventDefault();
+
+            // Ensuite on récupère les données des différents champs du formulaire
+            const firstNameElt = document.getElementById('firstName');
+            const lastNameElt = document.getElementById('lastName');
+            const addressElt = document.getElementById('address');
+            const cityElt = document.getElementById('city');
+            const emailElt = document.getElementById('email');
+
+            // On stock l'id des produits du panier dans un tableau
+            const itemsId = [];
+            for(let l = 0; l < localItems.length; l++) {
+                itemsId.push(localItems[l].id);
+            }
+
+            // On prépare les données du formulaires ainsi que l'id des produits pour les envoyer au format  JSON
+            let dataOrder = {
+                infos : {
+                    firstName: firstNameElt,
+                    lastName: lastNameElt,
+                    address: addressElt,
+                    city: cityElt,
+                    email: emailElt,
+                },
+                items: itemsId,
+            }
+            let myInit = {
+                method: 'POST',
+                body: JSON.stringify(dataOrder),
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                }
+            }
+                
+            // On requète l'API en lui envoyant les données de la commande
+            fetch('http://localhost:3000/api/products/order', myInit) 
+                
+            .then(function(response) { 
+                    return response.json();
+            })
+            .then(function(postData) {
+                localStorage.clear();
+                localStorage.setItem('orderId', postData.orderId);
+                document.location.href = 'confirmation.html';
+            })
+            .catch (function(err) {
+                alert(err);
+            });
+        })
+    }
+    sendData();
 }
+
+    
+   
 
 
 
