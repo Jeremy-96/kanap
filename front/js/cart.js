@@ -332,12 +332,6 @@ function getOrderId() {
     localStorage.clear();
 }
 
-/**
- * La condition ci-dessous va analyser si un article se trouve dans le localStorage ou non
- * SI ce n'est pas le cas, alors rien ne s'affiche
- * SINON on va itérer sur tous les éléments du tableau, un élément correspond à un produit.
- * Ensuite on affichera les produits contenus dans le tableau de manière dynamique avec le DOM
- */
 if(localItems === null) { 
     getOrderId();
 }else {
