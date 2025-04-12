@@ -24,7 +24,7 @@ https://nodejs.org/en/download/
 **Clone repository**
 
 ```
-git clone https://github.com/Jeremy-96/JeremyThonon_5_01112021.git
+git clone https://github.com/Jeremy-96/kanap.git
 ```
 
 ## Backend :
